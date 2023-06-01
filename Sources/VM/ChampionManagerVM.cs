@@ -1,12 +1,7 @@
 ﻿using Model;
 using MvvmToolkit;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace VM
@@ -44,7 +39,7 @@ namespace VM
                     return Index > 1;
                 });
 
-            Index = 1;
+            Index = 2;
         }
 
         public int Index {
@@ -57,9 +52,9 @@ namespace VM
                 OnPropertyChanged();
             }
         }
-        private int index = 0;
+        private int index = -1;
 
-        private int Count { get; set; } = 5;
+        private int Count { get; set; } = 6;
 
         private async void ToDoOnChange(object? sender, PropertyChangedEventArgs e)
         {
@@ -71,7 +66,7 @@ namespace VM
 
         private async Task LoadChampions(int index, int count)
         {
-            var theChampions = await DataManager.ChampionsMgr.GetItems(index-1, count);
+            var theChampions = await DataManager.ChampionsMgr.GetItems(index-1, count, "Name");
             champions.Clear();
             foreach (var champion in theChampions)
             {

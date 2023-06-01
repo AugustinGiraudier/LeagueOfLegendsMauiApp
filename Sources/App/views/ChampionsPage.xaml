@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App.Converters"
              x:Class="App.views.ChampionsPage"
              Title="ChampionsPage">
+    <ContentPage.Resources>
+        <local:Base64ToImageSourceConverter x:Key="b64toImage" />
+    </ContentPage.Resources>
+    
     <VerticalStackLayout>
         <Label 
             Text="Champions"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Champions}">
+        <ListView Grid.Row="1" ItemsSource="{Binding Champions}" CachingStrategy="RecycleElement">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ImageCell ImageSource="{Binding Image}"
+                    <ImageCell ImageSource="{Binding Icon, Converter={StaticResource b64toImage}, Mode=OneWay}"
                                Text="{Binding Name}"
                                Detail="{Binding ChampionClassClass}"/>
                 </DataTemplate>

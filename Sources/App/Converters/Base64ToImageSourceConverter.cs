@@ -7,9 +7,9 @@ namespace App.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var base64 = value as string;
             try
             {
+                var base64 = value as string;
                 byte[] bytes = System.Convert.FromBase64String(base64);
                 return ConvertFrom(bytes);
             }
