@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:App" 
+             xmlns:vm="clr-namespace:VM;assembly=VM"
              xmlns:local="clr-namespace:App.Converters"
              x:Class="App.views.ChampionsPage"
              Title="ChampionsPage">
@@ -14,12 +16,48 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Champions}" CachingStrategy="RecycleElement">
+        <ListView Grid.Row="1" ItemsSource="{Binding vm.Champions}" SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ImageCell ImageSource="{Binding Icon, Converter={StaticResource b64toImage}, Mode=OneWay}"
+                <DataTemplate x:DataType="vm:ChampionVM">
+                    <!--<ViewCell>
+                        <SwipeView>
+
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Supprimer"
+                                               BackgroundColor="DarkSalmon" />
+                                    <SwipeItem Text="Modifier"
+                                               BackgroundColor="LightGreen" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="{Binding Icon, Converter={StaticResource b64toImage}}"
+                                                   WidthRequest="50"
+                                                   HeightRequest="50"/>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label Text="{Binding Name}"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       FontAttributes="Bold"/>
+                                        <Label Text="{Binding ChampionClassClass}"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       FontSize="Caption"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout.GestureRecognizers 
+                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
+                                    CommandParameter="{Binding .}" />
+                            </StackLayout>
+                        </SwipeView>
+                    </ViewCell>-->
+                    <ImageCell ImageSource="{Binding Icon, Converter={StaticResource b64toImage}}"
                                Text="{Binding Name}"
-                               Detail="{Binding ChampionClassClass}"/>
+                               Detail="{Binding ChampionClassClass}"
+                               Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
+                               CommandParameter="{Binding .}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -27,11 +65,11 @@
 
         <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0">
 
-            <Button Text="&lt;" Command="{Binding PreviousPage}"/>
-            <Label Text="{Binding Index}" Margin="5,0,0,0"/>
+            <Button Text="&lt;" Command="{Binding vm.PreviousPage}"/>
+            <Label Text="{Binding vm.Index}" Margin="5,0,0,0"/>
             <Label Text="/"/>
-            <Label Text="{Binding MaxCount}"  Margin="0,0,5,0"/>
-            <Button Text=">" Command="{Binding NextPage}"/>
+            <Label Text="{Binding vm.MaxCount}"  Margin="0,0,5,0"/>
+            <Button Text=">" Command="{Binding vm.NextPage}"/>
 
         </HorizontalStackLayout>
         

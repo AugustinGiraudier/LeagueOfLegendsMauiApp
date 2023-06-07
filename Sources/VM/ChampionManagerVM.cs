@@ -9,6 +9,8 @@ namespace VM
     public class ChampionManagerVM : BaseVmNoModel
     {
 
+        public INavigation Navigation { get; set; }
+
         public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
         private ObservableCollection<ChampionVM> champions =  new ObservableCollection<ChampionVM>();
 
@@ -39,7 +41,7 @@ namespace VM
                     return Index > 1;
                 });
 
-            Index = 2;
+            Index = 1;
         }
 
         public int Index {

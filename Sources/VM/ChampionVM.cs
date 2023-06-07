@@ -2,16 +2,20 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MvvmToolkit;
+using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace VM
 {
     public class ChampionVM : BaseVM<Champion>
     {
         public ChampionVM()
-            : base(new Champion("New Champion", ChampionClass.Fighter, "", "", ""))
+            : this(new Champion("New Champion", ChampionClass.Fighter, "", "", ""))
         {}
 
-        public ChampionVM(Champion model) : base(model) { }
+        public ChampionVM(Champion model) 
+            : base(model)
+        {}
 
         public string Name
         {
@@ -39,6 +43,8 @@ namespace VM
                 OnPropertyChanged();
             }
         }
+
+        //public ICommand Tapped { get; private set; }
 
     }
 }
