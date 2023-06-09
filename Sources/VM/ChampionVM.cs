@@ -15,8 +15,10 @@ namespace VM
             : base(model)
         {}
 
-        public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
-        private ObservableCollection<ChampionVM> champions = new ObservableCollection<ChampionVM>();
+        //public ObservableDictionary<string,int> Characteristics { get; private set; }
+
+        //public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
+        //private Observable champions = new ObservableCollection<ChampionVM>();
 
         public string Name
         {

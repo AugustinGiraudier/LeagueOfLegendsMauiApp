@@ -21,7 +21,7 @@ namespace VM
             Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
             DataManager = dataManager;
             PropertyChanged += ToDoOnChange;
-            MaxCount = DataManager.ChampionsMgr.GetNbItems().Result / Count +1;
+            updateMaxCount();
 
             ////// Commands :
 
@@ -39,6 +39,13 @@ namespace VM
                 },
                 canExecute: () => {
                     return Index > 1;
+                });
+            
+            RemoveChampion = new Command<ChampionVM>(
+                execute: (ChampionVM chp) => {
+                    DataManager.ChampionsMgr.DeleteItem(chp.Model);
+                    updateMaxCount();
+                    OnPropertyChanged(nameof(Index));
                 });
 
             Index = 1;
@@ -76,10 +83,27 @@ namespace VM
             }
         }
 
-        public int MaxCount { get => maxCount; private set { maxCount = value; } }
+        public int MaxCount { 
+            get => maxCount; 
+            private set { 
+                maxCount = value;
+                if (NextPage != null)       (NextPage as Command).ChangeCanExecute();
+                if (PreviousPage != null)   (PreviousPage as Command).ChangeCanExecute();
+                if(Index > MaxCount)
+                    Index = MaxCount;
+                OnPropertyChanged();
+            } 
+        }
         private int maxCount;
+
+        private void updateMaxCount()
+        {
+            MaxCount = (int)Math.Ceiling((double)DataManager.ChampionsMgr.GetNbItems().Result / Count);
+        }
 
         public ICommand NextPage { get; private set; }
         public ICommand PreviousPage { get; private set; }
+
+        public ICommand RemoveChampion { get; private set; }
     }
 }

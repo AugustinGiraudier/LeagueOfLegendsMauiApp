@@ -38,11 +38,13 @@
                                 <SwipeItems>
                                     <SwipeItem Text="Supprimer"
                                                BackgroundColor="IndianRed"
-                                               Command="{Binding Vm.NavigateToChampion, Source={x:Reference rootPage}}"
+                                               Command="{Binding Vm.vm.RemoveChampion, Source={x:Reference rootPage}}"
                                                CommandParameter="{Binding .}"
                                                />
                                     <SwipeItem Text="Modifier"
-                                               BackgroundColor="DarkSeaGreen" />
+                                               BackgroundColor="DarkSeaGreen" 
+                                               Command="{Binding Vm.vm.RemoveChampion, Source={x:Reference rootPage}}"
+                                               CommandParameter="{Binding .}"/>
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
