@@ -60,10 +60,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="views\UpdateChampion.xaml.cs">
+	    <DependentUpon>UpdateChampion.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="views\ChampionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="views\ChampionsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="views\UpdateChampion.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

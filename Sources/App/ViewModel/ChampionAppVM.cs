@@ -6,17 +6,19 @@ namespace App.ViewModel
 {
     public class ChampionAppVM
     {
-        public INavigation Navigation { get; set; }
+        public INavigation Navigation { get; private set; }
 
         public ChampionVM vm { get; private set; }
 
-        public ChampionAppVM(ChampionVM vm)
+        public ChampionAppVM(ChampionVM vm, INavigation nav)
         {
             this.vm = vm;
+            this.Navigation = nav;
 
-            NavigateToChampion = new Command(
-                execute: async () => await NavigateToChamp(),
-                canExecute: () => Navigation is not null);
+            OpenUpdatePage = new Command(
+                execute: async () => await Navigation.PushAsync(new UpdateChampion(vm)),
+                canExecute: () => Navigation != null
+            );
         }
 
         private async Task NavigateToChamp()
@@ -24,6 +26,6 @@ namespace App.ViewModel
             await Navigation.PushAsync(new ChampionPage(vm));
         }
 
-        public ICommand NavigateToChampion { get; private set; }
+        public ICommand OpenUpdatePage { get; private set; }
     }
 }

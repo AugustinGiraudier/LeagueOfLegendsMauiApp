@@ -6,13 +6,14 @@ namespace App.ViewModel
 {
     public class ChampionManagerAppVM
     {
-        public INavigation Navigation { get; set; }
+        public INavigation Navigation { get; private set; }
 
         public ChampionManagerVM vm { get; private set; }
 
-        public ChampionManagerAppVM(ChampionManagerVM vm)
+        public ChampionManagerAppVM(ChampionManagerVM vm, INavigation nav)
         {
             this.vm = vm;
+            this.Navigation = nav;
 
             // commands : 
 

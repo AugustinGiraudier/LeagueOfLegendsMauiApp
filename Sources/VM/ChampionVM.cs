@@ -70,5 +70,19 @@ namespace VM
             }
         }
 
+        public ChampionVM clone()
+        {
+            Champion c = new Champion(Name, ChampionClassMapper.getModel(Class), Icon, Base64Image, Bio);
+            return new ChampionVM(c);
+        }
+
+        public void update(ChampionVM other)
+        {
+            if (other == null) return;
+            Base64Image = other.Base64Image;
+            Bio = other.Bio;
+            Class = other.Class;
+            Icon = other.Icon;
+        }
     }
 }

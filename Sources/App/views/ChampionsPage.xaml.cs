@@ -10,8 +10,7 @@ public partial class ChampionsPage : ContentPage
 
     public ChampionsPage(ChampionManagerVM vm)
 	{
-		Vm = new ChampionManagerAppVM(vm);
-		Vm.Navigation = this.Navigation;
+		Vm = new ChampionManagerAppVM(vm, Navigation);
 		InitializeComponent();
 		BindingContext = Vm;
 	}

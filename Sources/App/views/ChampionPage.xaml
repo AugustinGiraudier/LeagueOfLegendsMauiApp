@@ -10,6 +10,10 @@
         <converters:Base64ToImageSourceConverter x:Key="b64toImage" />
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Modify" Command="{Binding OpenUpdatePage}"/>
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout>
         <Image Source="{Binding vm.Base64Image, Converter={StaticResource b64toImage}}">
             <Image.HeightRequest>

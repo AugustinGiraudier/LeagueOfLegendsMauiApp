@@ -12,7 +12,7 @@ public partial class ChampionPage : ContentPage
 
 	public ChampionPage(ChampionVM champ)
 	{
-		this.Vm = new ChampionAppVM(champ);
+		this.Vm = new ChampionAppVM(champ, Navigation);
 		InitializeComponent();
 		BindingContext = Vm;
 	}
