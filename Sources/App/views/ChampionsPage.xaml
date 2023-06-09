@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:view="clr-namespace:App" 
              xmlns:vm="clr-namespace:VM;assembly=VM"
-             xmlns:local="clr-namespace:App.Converters"
+             xmlns:converters="clr-namespace:App.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:appvm="clr-namespace:App.ViewModel"
              x:Class="App.views.ChampionsPage"
+             x:Name="rootPage"
              Title="ChampionsPage">
     <ContentPage.Resources>
-        <local:Base64ToImageSourceConverter x:Key="b64toImage" />
+        <converters:Base64ToImageSourceConverter x:Key="b64toImage" />
+        <ResourceDictionary>
+            <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+        </ResourceDictionary>
     </ContentPage.Resources>
     
     <VerticalStackLayout>
@@ -17,17 +23,26 @@
             HorizontalOptions="Center" />
 
         <ListView Grid.Row="1" ItemsSource="{Binding vm.Champions}" SelectionMode="None">
+            <ListView.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding NavigateToChampion}"
+                    EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChampionVM">
-                    <!--<ViewCell>
+                    <ViewCell>
                         <SwipeView>
 
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem Text="Supprimer"
-                                               BackgroundColor="DarkSalmon" />
+                                               BackgroundColor="IndianRed"
+                                               Command="{Binding Vm.NavigateToChampion, Source={x:Reference rootPage}}"
+                                               CommandParameter="{Binding .}"
+                                               />
                                     <SwipeItem Text="Modifier"
-                                               BackgroundColor="LightGreen" />
+                                               BackgroundColor="DarkSeaGreen" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
@@ -36,12 +51,13 @@
                                     <Image Source="{Binding Icon, Converter={StaticResource b64toImage}}"
                                                    WidthRequest="50"
                                                    HeightRequest="50"/>
-                                    <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Vertical" Margin="5,0,0,0">
                                         <Label Text="{Binding Name}"
                                                        VerticalOptions="CenterAndExpand" 
                                                        HorizontalOptions="StartAndExpand"
                                                        FontAttributes="Bold"/>
                                         <Label Text="{Binding ChampionClassClass}"
+                                                        Margin="0,0,0,10"
                                                        VerticalOptions="CenterAndExpand" 
                                                        HorizontalOptions="StartAndExpand"
                                                        FontSize="Caption"/>
@@ -52,12 +68,7 @@
                                     CommandParameter="{Binding .}" />
                             </StackLayout>
                         </SwipeView>
-                    </ViewCell>-->
-                    <ImageCell ImageSource="{Binding Icon, Converter={StaticResource b64toImage}}"
-                               Text="{Binding Name}"
-                               Detail="{Binding ChampionClassClass}"
-                               Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
-                               CommandParameter="{Binding .}" />
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
