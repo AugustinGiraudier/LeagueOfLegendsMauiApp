@@ -1,4 +1,5 @@
 
+using App.ViewModel;
 using VM;
 
 namespace App.views;
@@ -7,12 +8,12 @@ namespace App.views;
 public partial class ChampionPage : ContentPage
 {
 
-	public ChampionVM champVM { get; private set; }
+	public ChampionAppVM Vm { get; private set; }
 
 	public ChampionPage(ChampionVM champ)
 	{
-		this.champVM = champ;
+		this.Vm = new ChampionAppVM(champ);
 		InitializeComponent();
-		BindingContext = champVM;
+		BindingContext = Vm;
 	}
 }

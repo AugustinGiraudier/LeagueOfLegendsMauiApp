@@ -56,7 +56,7 @@ namespace VM
         }
         private int index = -1;
 
-        private int Count { get; set; } = 6;
+        private int Count { get; set; } = 5;
 
         private async void ToDoOnChange(object? sender, PropertyChangedEventArgs e)
         {
