@@ -20,13 +20,17 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
+        <Image Source="{Binding vm.Copy.Icon, Converter={StaticResource b64toImage}}" HeightRequest="50" HorizontalOptions="Center" Margin="0,10,0,20">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding TakeIconCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+
         <Image Source="{Binding vm.Copy.Base64Image, Converter={StaticResource b64toImage}}" HeightRequest="300" >
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding TakePictureCommand}"/>
             </Image.GestureRecognizers>
         </Image>
-
-        <!--<Button Text="Change" Command="{Binding TakePictureCommand}" HorizontalOptions="Start"/>-->
 
         <Editor Text="{Binding vm.Copy.Bio}" />
 
