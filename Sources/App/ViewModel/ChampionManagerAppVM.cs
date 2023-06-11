@@ -17,9 +17,14 @@ namespace App.ViewModel
 
             // commands : 
 
-            NavigateToChampion = new Command<ChampionVM>(
+            NavigateToChampionCommand = new Command<ChampionVM>(
                 execute: async (ChampionVM cvm) => await NavigateToChamp(cvm),
                 canExecute: (ChampionVM cvm) => Navigation is not null);
+
+            ModifyChampionCommand = new Command<ChampionVM>(
+                execute: async (ChampionVM cvm) => await Navigation.PushAsync(new UpdateChampion(cvm)),
+                canExecute: (ChampionVM cvm) => Navigation != null
+            );
 
         }
 
@@ -30,6 +35,7 @@ namespace App.ViewModel
         }
 
         // Commands :
-        public ICommand NavigateToChampion { get; private set; }
+        public ICommand NavigateToChampionCommand { get; private set; }
+        public ICommand ModifyChampionCommand { get; private set; }
     }
 }

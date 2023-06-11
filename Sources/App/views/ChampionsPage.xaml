@@ -15,76 +15,78 @@
             <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <VerticalStackLayout>
-        <Label 
-            Text="Champions"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-        <ListView Grid.Row="1" ItemsSource="{Binding vm.Champions}" SelectionMode="None">
-            <ListView.Behaviors>
-                <toolkit:EventToCommandBehavior
-                    EventName="ItemTapped"
-                    Command="{Binding NavigateToChampion}"
-                    EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-            </ListView.Behaviors>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ChampionVM">
-                    <ViewCell>
-                        <SwipeView>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+                Text="Champions"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
 
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Supprimer"
-                                               BackgroundColor="IndianRed"
-                                               Command="{Binding Vm.vm.RemoveChampion, Source={x:Reference rootPage}}"
-                                               CommandParameter="{Binding .}"
-                                               />
-                                    <SwipeItem Text="Modifier"
-                                               BackgroundColor="DarkSeaGreen" 
-                                               Command="{Binding Vm.vm.RemoveChampion, Source={x:Reference rootPage}}"
-                                               CommandParameter="{Binding .}"/>
-                                </SwipeItems>
-                            </SwipeView.RightItems>
+            <ListView Grid.Row="1" ItemsSource="{Binding vm.Champions}" SelectionMode="None">
+                <ListView.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="ItemTapped"
+                        Command="{Binding NavigateToChampionCommand}"
+                        EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ChampionVM">
+                        <ViewCell>
+                            <SwipeView>
 
-                            <StackLayout Orientation="Vertical">
-                                <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding Icon, Converter={StaticResource b64toImage}}"
-                                                   WidthRequest="50"
-                                                   HeightRequest="50"/>
-                                    <StackLayout Orientation="Vertical" Margin="5,0,0,0">
-                                        <Label Text="{Binding Name}"
-                                                       VerticalOptions="CenterAndExpand" 
-                                                       HorizontalOptions="StartAndExpand"
-                                                       FontAttributes="Bold"/>
-                                        <Label Text="{Binding Class}"
-                                                        Margin="0,0,0,10"
-                                                       VerticalOptions="CenterAndExpand" 
-                                                       HorizontalOptions="StartAndExpand"
-                                                       FontSize="Caption"/>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Supprimer"
+                                                   BackgroundColor="IndianRed"
+                                                   Command="{Binding Vm.vm.RemoveChampion, Source={x:Reference rootPage}}"
+                                                   CommandParameter="{Binding .}"
+                                                   />
+                                        <SwipeItem Text="Modifier"
+                                                   BackgroundColor="DarkSeaGreen" 
+                                                   Command="{Binding Vm.ModifyChampionCommand, Source={x:Reference rootPage}}"
+                                                   CommandParameter="{Binding .}"/>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding Icon, Converter={StaticResource b64toImage}}"
+                                                       WidthRequest="50"
+                                                       HeightRequest="50"/>
+                                        <StackLayout Orientation="Vertical" Margin="5,0,0,0">
+                                            <Label Text="{Binding Name}"
+                                                           VerticalOptions="CenterAndExpand" 
+                                                           HorizontalOptions="StartAndExpand"
+                                                           FontAttributes="Bold"/>
+                                            <Label Text="{Binding Class}"
+                                                            Margin="0,0,0,10"
+                                                           VerticalOptions="CenterAndExpand" 
+                                                           HorizontalOptions="StartAndExpand"
+                                                           FontSize="Caption"/>
+                                        </StackLayout>
                                     </StackLayout>
+                                    <StackLayout.GestureRecognizers 
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
+                                        CommandParameter="{Binding .}" />
                                 </StackLayout>
-                                <StackLayout.GestureRecognizers 
-                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
-                                    CommandParameter="{Binding .}" />
-                            </StackLayout>
-                        </SwipeView>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            </SwipeView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
 
-        <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0">
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0">
 
-            <Button Text="&lt;" Command="{Binding vm.PreviousPage}"/>
-            <Label Text="{Binding vm.Index}" Margin="5,0,0,0"/>
-            <Label Text="/"/>
-            <Label Text="{Binding vm.MaxCount}"  Margin="0,0,5,0"/>
-            <Button Text=">" Command="{Binding vm.NextPage}"/>
+                <Button Text="&lt;" Command="{Binding vm.PreviousPage}"/>
+                <Label Text="{Binding vm.Index}" Margin="5,0,0,0"/>
+                <Label Text="/"/>
+                <Label Text="{Binding vm.MaxCount}"  Margin="0,0,5,0"/>
+                <Button Text=">" Command="{Binding vm.NextPage}"/>
 
-        </HorizontalStackLayout>
+            </HorizontalStackLayout>
         
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
