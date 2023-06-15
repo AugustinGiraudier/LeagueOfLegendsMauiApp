@@ -11,6 +11,9 @@ namespace VM
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
         private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
 
+        public ReadOnlyObservableDictionary<string, int> Characteristics { get; private set; }
+        private ObservableDictionary<string, int> characteristics = new ObservableDictionary<string, int>();
+        
         public ChampionVM()
             : this(new Champion("New Champion", ChampionClass.Unknown,
                 DefaultImagesUtil.DEFAULT_CHAMPION_ICON,
@@ -22,8 +25,14 @@ namespace VM
             : base(model)
         {
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            Characteristics = new ReadOnlyObservableDictionary<string, int>(characteristics);
+
             foreach (var skin in Model.Skins) {
                 this.skins.Add(new SkinVM(skin));
+            }
+            foreach (var chara in Model.Characteristics)
+            {
+                this.characteristics[chara.Key] = chara.Value;
             }
         }
 
