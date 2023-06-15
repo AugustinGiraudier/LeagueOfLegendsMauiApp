@@ -8,13 +8,13 @@ using System.Windows.Input;
 
 namespace VM
 {
-    public class ModifiableChamionVM
+    public class ModifiableChampionVM
     {
         private ChampionVM vm;
         public ChampionVM Copy { get; private set; }
 
         
-        public ModifiableChamionVM(ChampionVM championVM)
+        public ModifiableChampionVM(ChampionVM championVM)
         {
             vm = championVM;
             Copy = championVM.clone();

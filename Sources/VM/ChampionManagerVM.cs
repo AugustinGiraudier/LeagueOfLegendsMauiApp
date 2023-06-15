@@ -65,7 +65,7 @@ namespace VM
 
         private int Count { get; set; } = 5;
 
-        private async void ToDoOnChange(object? sender, PropertyChangedEventArgs e)
+        private async void ToDoOnChange(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName.Equals(nameof(Index)) || e.PropertyName.Equals(nameof(Count)))
             {

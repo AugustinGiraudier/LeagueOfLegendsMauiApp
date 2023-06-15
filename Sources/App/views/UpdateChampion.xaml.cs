@@ -9,7 +9,7 @@ public partial class UpdateChampion : ContentPage
 
     public UpdateChampion(ChampionVM champ)
     {
-        this.Vm = new ModifiableChampionAppVM(new ModifiableChamionVM(champ), Navigation);
+        this.Vm = new ModifiableChampionAppVM(new ModifiableChampionVM(champ), Navigation);
         InitializeComponent();
         BindingContext = Vm;
     }

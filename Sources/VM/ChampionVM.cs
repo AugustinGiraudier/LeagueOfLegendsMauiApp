@@ -7,18 +7,21 @@ namespace VM
 {
     public class ChampionVM : BaseVM<Champion>
     {
+        public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
+        private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
+
         public ChampionVM()
-            : this(new Champion("New Champion", ChampionClass.Fighter, "", "", ""))
+            : this(new Champion("New Champion", ChampionClass.Unknown, "", "", ""))
         {}
 
         public ChampionVM(Champion model)
             : base(model)
-        {}
-
-        //public ObservableDictionary<string,int> Characteristics { get; private set; }
-
-        //public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
-        //private Observable champions = new ObservableCollection<ChampionVM>();
+        {
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            foreach (var skin in Model.Skins) {
+                this.skins.Add(new SkinVM(skin));
+            }
+        }
 
         public string Name
         {

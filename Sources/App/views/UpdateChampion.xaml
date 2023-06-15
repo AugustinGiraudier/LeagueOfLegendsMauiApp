@@ -2,37 +2,47 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:App.Converters"
+             xmlns:utils="clr-namespace:VM.Utils;assembly=VM"
+             xmlns:vm="clr-namespace:VM;assembly=VM"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.views.UpdateChampion"
              Title="UpdateChapion">
 
     <ContentPage.Resources>
         <converters:Base64ToImageSourceConverter x:Key="b64toImage" />
+        <utils:EnumUtil x:TypeArguments="vm:ChampionClassVM" x:Key="classTypes"/>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Command="{Binding SaveChangesCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding vm.Copy.Name}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+                Text="{Binding vm.Copy.Name}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
 
         <Image Source="{Binding vm.Copy.Icon, Converter={StaticResource b64toImage}}" HeightRequest="50" HorizontalOptions="Center" Margin="0,10,0,20">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding TakeIconCommand}"/>
-            </Image.GestureRecognizers>
-        </Image>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TakeIconCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
 
         <Image Source="{Binding vm.Copy.Base64Image, Converter={StaticResource b64toImage}}" HeightRequest="300" >
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding TakePictureCommand}"/>
-            </Image.GestureRecognizers>
-        </Image>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TakePictureCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
 
-        <Editor Text="{Binding vm.Copy.Bio}" />
+            <Editor Text="{Binding vm.Copy.Bio}" />
 
-    </VerticalStackLayout>
+            <Picker ItemsSource="{Binding Values, Source={StaticResource classTypes}}"
+                VerticalOptions="Center" Margin="10" SelectedItem="{Binding vm.Copy.Class}"/>
+
+            
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

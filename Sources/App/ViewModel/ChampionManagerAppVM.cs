@@ -30,7 +30,6 @@ namespace App.ViewModel
 
         private async Task NavigateToChamp(ChampionVM cvm)
         {
-            Console.WriteLine("Test");
             await Navigation.PushAsync(new ChampionPage(cvm));
         }
 

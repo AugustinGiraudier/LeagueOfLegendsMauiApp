@@ -7,16 +7,16 @@ namespace App.ViewModel
     public class ModifiableChampionAppVM
     {
         private INavigation navigation;
-        public ModifiableChamionVM vm { get; private set; }
+        public ModifiableChampionVM vm { get; private set; }
 
 
-        public ModifiableChampionAppVM(ModifiableChamionVM vm, INavigation navigation)
+        public ModifiableChampionAppVM(ModifiableChampionVM vm, INavigation navigation)
         {
             this.navigation = navigation;
             this.vm = vm;
 
             SaveChangesCommand = new Command(
-              execute: () => saveChanges(),
+              execute: async () => await saveChanges(),
               canExecute: () => vm != null
             );
 
@@ -24,7 +24,7 @@ namespace App.ViewModel
             TakeIconCommand = new Command(() => TakeIcon());
         }
 
-        private async void saveChanges()
+        private async Task saveChanges()
         {
             vm.saveChanges();
             await navigation.PopAsync();
