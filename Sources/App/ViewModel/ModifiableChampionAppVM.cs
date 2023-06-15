@@ -1,4 +1,5 @@
 ﻿using App.Converters;
+using App.Utils;
 using System.Windows.Input;
 using VM;
 
@@ -23,8 +24,8 @@ namespace App.ViewModel
             TakePictureCommand = new Command(() => TakePhoto());
             TakeIconCommand = new Command(() => TakeIcon());
         }
-        public ModifiableChampionAppVM(ChampionManagerVM manager, INavigation navigation)
-            :this(new ModifiableChampionVM(manager), navigation)
+        public ModifiableChampionAppVM(INavigation navigation)
+            :this(new ModifiableChampionVM(), navigation)
         {
         }
 
@@ -40,7 +41,7 @@ namespace App.ViewModel
 
         public async void TakePhoto()
         {
-            string image = await ChooseImageB64();
+            string image = await ImageUtils.ChooseImageB64();
             if (image != null)
             {
                 vm.Copy.Base64Image = image;
@@ -49,30 +50,13 @@ namespace App.ViewModel
 
         public async void TakeIcon()
         {
-            string icon = await ChooseImageB64();
+            string icon = await ImageUtils.ChooseImageB64();
             if(icon != null)
             {
                 vm.Copy.Icon = icon;
             }
         }
 
-        private async Task<string> ChooseImageB64()
-        {
-            if (MediaPicker.Default.IsCaptureSupported)
-            {
-                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
-
-                if (photo != null)
-                {
-                    Console.WriteLine(photo.ToString());
-                    var stream = await photo.OpenReadAsync();
-                    var source = ImageSource.FromStream(() => stream);
-                    return new Base64ToImageSourceConverter().ConvertBack(source, null, null, null) as string;
-                }
-
-            }
-
-            return null;
-        }
+        
     }
 }

@@ -47,8 +47,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            <Label Text="Skins" Margin="5,20,0,0" FontSize="Large"/>
+
+            <Grid>
+                <Label Text="Skins" Margin="5,20,0,0" FontSize="Large" HorizontalOptions="Start"/>
+                <Button Text="Add" Command="{Binding AddSkinCommand}" HorizontalOptions="End"/>
+            </Grid>
             <ListView ItemsSource="{Binding vm.Skins}" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>

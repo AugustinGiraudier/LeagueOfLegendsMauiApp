@@ -87,7 +87,7 @@ namespace VM
             }
         }
 
-        public ChampionVM clone()
+        public ChampionVM Clone()
         {
             Champion c = new Champion(Name, ChampionClassMapper.getModel(Class), Icon, Base64Image, Bio);
             foreach(var chara in Characteristics)
@@ -102,6 +102,11 @@ namespace VM
             Model?.AddCharacteristics(Tuple.Create(characteristic, value));
             characteristics.Remove(characteristic);
             characteristics.Add(characteristic, value);
+        }
+
+        public void addSkin(SkinVM skin)
+        {
+            skins.Add(skin);
         }
 
         public void update(ChampionVM other)

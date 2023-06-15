@@ -14,37 +14,25 @@ namespace VM
         private ChampionVM vm;
         public ChampionVM Copy { get; private set; }
 
-        private ChampionManagerVM manager = null;
-
         public string CharacteristicToAdd { get; set; } = "";
         public int CharacteristicValueToAdd { get; set; } = 0;
 
-        private string name;
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Name { get; set; }
 
         public bool isNewChampion { get; private init; } = false;
 
         public ModifiableChampionVM(ChampionVM championVM)
         {
             vm = championVM;
-            Copy = championVM.clone();
+            Copy = championVM.Clone();
             Name = championVM.Name;
 
             AddCurrentCharacteristic = new Command(() => DoAddCurrentCharacteristic());
         }
-        public ModifiableChampionVM(ChampionManagerVM manager)
+        public ModifiableChampionVM()
             :this(new ChampionVM())
         {
             isNewChampion = true;
-            this.manager = manager;
         }
 
         public void saveChanges()
@@ -55,7 +43,7 @@ namespace VM
             // cas d'une creation de champion :
             if(isNewChampion)
             {
-                manager?.addChampion(this);
+                ManagerProvider.Instance?.addChampion(this);
             }
         }
 

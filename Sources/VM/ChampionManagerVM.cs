@@ -122,6 +122,18 @@ namespace VM
             await LoadChampions();
         }
 
+        public async Task addSkin(ModifiableSkinVM msvm)
+        {
+            var sk = new Skin(
+                msvm.Name,
+                msvm.Champion.Model,
+                icon: msvm.Icon
+                );
+
+            await DataManager.SkinsMgr.AddItem( sk );
+            await LoadChampions();
+        }
+
         public ICommand NextPage { get; private set; }
         public ICommand PreviousPage { get; private set; }
 

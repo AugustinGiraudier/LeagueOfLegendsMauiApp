@@ -23,6 +23,7 @@ namespace App
                 .Services
                     .AddSingleton<IDataManager,StubData>()
                     .AddSingleton<ChampionManagerVM>()
+                    .AddSingleton<ManagerProvider>()
                     .AddSingleton<ChampionsPage>();
 
 #if DEBUG

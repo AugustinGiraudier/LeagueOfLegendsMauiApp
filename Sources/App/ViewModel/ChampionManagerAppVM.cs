@@ -10,10 +10,10 @@ namespace App.ViewModel
 
         public ChampionManagerVM vm { get; private set; }
 
-        public ChampionManagerAppVM(ChampionManagerVM vm, INavigation nav)
+        public ChampionManagerAppVM(INavigation nav)
         {
-            this.vm = vm;
             this.Navigation = nav;
+            vm = ManagerProvider.Instance;
 
             // commands : 
 
@@ -37,7 +37,7 @@ namespace App.ViewModel
 
         private async Task NavigateToAddChamion()
         {
-            await Navigation.PushAsync(new UpdateChampion(vm));
+            await Navigation.PushAsync(new UpdateChampion());
         }
 
         // Commands :

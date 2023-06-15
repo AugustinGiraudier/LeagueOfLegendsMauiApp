@@ -8,9 +8,9 @@ public partial class ChampionsPage : ContentPage
 
 	public ChampionManagerAppVM Vm { get; private set; }
 
-    public ChampionsPage(ChampionManagerVM vm)
+    public ChampionsPage(ManagerProvider provider)
 	{
-		Vm = new ChampionManagerAppVM(vm, Navigation);
+        Vm = new ChampionManagerAppVM(Navigation);
 		InitializeComponent();
 		BindingContext = Vm;
 	}

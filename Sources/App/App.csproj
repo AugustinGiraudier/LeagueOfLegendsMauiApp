@@ -66,6 +66,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="views\AddSkinPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="views\ChampionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

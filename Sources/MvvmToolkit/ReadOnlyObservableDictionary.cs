@@ -14,8 +14,8 @@ namespace MvvmToolkit
             dictionary.PropertyChanged += HandlePropertyChanged;
         }
 
-        public event NotifyCollectionChangedEventHandler? CollectionChanged;
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(PropertyChangedEventArgs args)
         {
@@ -27,12 +27,12 @@ namespace MvvmToolkit
             CollectionChanged?.Invoke(this, args);
         }
 
-        private void HandlePropertyChanged(object? sender, PropertyChangedEventArgs eventArgs)
+        private void HandlePropertyChanged(object sender, PropertyChangedEventArgs eventArgs)
         {
             OnPropertyChanged(eventArgs);
         }
 
-        private void HandleCollectionChanged(object? sender, NotifyCollectionChangedEventArgs eventArgs)
+        private void HandleCollectionChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             OnCollectionChanged(eventArgs);
         }
