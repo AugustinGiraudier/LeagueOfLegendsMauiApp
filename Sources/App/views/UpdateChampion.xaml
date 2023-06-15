@@ -53,11 +53,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <HorizontalStackLayout>
-                <Entry Text="{Binding vm.CharacteristicToAdd}"/>
-                <Entry Keyboard="Numeric" Text="{Binding vm.CharacteristicValueToAdd, Converter={StaticResource intToStr}}"/>
-                <Button Text="Add" Command="{Binding vm.AddCurrentCharacteristic}"/>
-            </HorizontalStackLayout>
+            <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,10,0,20">
+                <Entry Text="{Binding vm.CharacteristicToAdd}" Grid.Column="0" Placeholder="New characteristic"/>
+                <Entry Keyboard="Numeric" Text="{Binding vm.CharacteristicValueToAdd, Converter={StaticResource intToStr}}" MinimumWidthRequest="50" Grid.Column="1"/>
+                <Button Text="Add" Command="{Binding vm.AddCurrentCharacteristic}" Grid.Column="2"/>
+            </Grid>
 
         </VerticalStackLayout>
     </ScrollView>
