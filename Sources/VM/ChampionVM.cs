@@ -1,6 +1,7 @@
 ﻿using Model;
 using MvvmToolkit;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using VM.Mappers;
 using VM.Utils;
 
@@ -32,7 +33,7 @@ namespace VM
             }
             foreach (var chara in Model.Characteristics)
             {
-                this.characteristics[chara.Key] = chara.Value;
+                this.characteristics.Add(chara.Key, chara.Value);
             }
         }
 
@@ -89,7 +90,18 @@ namespace VM
         public ChampionVM clone()
         {
             Champion c = new Champion(Name, ChampionClassMapper.getModel(Class), Icon, Base64Image, Bio);
+            foreach(var chara in Characteristics)
+            {
+                c.AddCharacteristics(Tuple.Create(chara.Key,chara.Value));
+            }
             return new ChampionVM(c);
+        }
+
+        public void AddCharacteristic(string characteristic, int value)
+        {
+            Model?.AddCharacteristics(Tuple.Create(characteristic, value));
+            characteristics.Remove(characteristic);
+            characteristics.Add(characteristic, value);
         }
 
         public void update(ChampionVM other)
@@ -99,6 +111,12 @@ namespace VM
             Bio = other.Bio;
             Class = other.Class;
             Icon = other.Icon;
+            characteristics.Clear();
+            foreach (var chara in other.Characteristics)
+            {
+                characteristics.Add(chara.Key, chara.Value);
+                Model?.AddCharacteristics(new Tuple<string, int>[] { Tuple.Create(chara.Key, chara.Value) });
+            }
         }
     }
 }

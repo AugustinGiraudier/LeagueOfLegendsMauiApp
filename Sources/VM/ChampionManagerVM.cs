@@ -102,7 +102,7 @@ namespace VM
             MaxCount = (int)Math.Ceiling((double)DataManager.ChampionsMgr.GetNbItems().Result / Count);
         }
 
-        public void addChampion(ModifiableChampionVM mcvm)
+        public async void addChampion(ModifiableChampionVM mcvm)
         {
             var ch = new Champion(
                 mcvm.Name,
@@ -111,11 +111,15 @@ namespace VM
                 mcvm.Copy.Base64Image,
                 mcvm.Copy.Bio
             );
+            foreach(var chara in mcvm.Copy.Characteristics)
+            {
+                ch.AddCharacteristics(Tuple.Create(chara.Key, chara.Value));
+            }
 
-            DataManager.ChampionsMgr.AddItem( ch );
+            await DataManager.ChampionsMgr.AddItem( ch );
 
             updateMaxCount();
-            LoadChampions();
+            await LoadChampions();
         }
 
         public ICommand NextPage { get; private set; }

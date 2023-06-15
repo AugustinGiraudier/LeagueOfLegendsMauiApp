@@ -16,6 +16,9 @@ namespace VM
 
         private ChampionManagerVM manager = null;
 
+        public string CharacteristicToAdd { get; set; } = "";
+        public int CharacteristicValueToAdd { get; set; } = 0;
+
         private string name;
         public string Name
         {
@@ -34,6 +37,8 @@ namespace VM
             vm = championVM;
             Copy = championVM.clone();
             Name = championVM.Name;
+
+            AddCurrentCharacteristic = new Command(() => DoAddCurrentCharacteristic());
         }
         public ModifiableChampionVM(ChampionManagerVM manager)
             :this(new ChampionVM())
@@ -53,5 +58,13 @@ namespace VM
                 manager?.addChampion(this);
             }
         }
+
+        private void DoAddCurrentCharacteristic()
+        {
+            if(CharacteristicToAdd != String.Empty)
+                Copy.AddCharacteristic(CharacteristicToAdd, CharacteristicValueToAdd);
+        }
+
+        public ICommand AddCurrentCharacteristic { get; private set; }
     }
 }
