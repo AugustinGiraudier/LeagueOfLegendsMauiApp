@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace VM
 {
-    public class ModifiableChampionVM : BaseVmNoModel
+    public class ModifiableChampionVM : BaseVM
     {
         private ChampionVM vm;
         public ChampionVM Copy { get; private set; }

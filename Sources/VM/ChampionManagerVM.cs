@@ -7,7 +7,7 @@ using VM.Mappers;
 
 namespace VM
 {
-    public class ChampionManagerVM : BaseVmNoModel
+    public class ChampionManagerVM : BaseVM
     {
 
         public INavigation Navigation { get; set; }

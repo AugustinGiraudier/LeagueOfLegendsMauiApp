@@ -3,7 +3,7 @@ using Model;
 
 namespace VM
 {
-    public class SkinVM : BaseVM<Skin>
+    public class SkinVM : BaseVMWithModel<Skin>
     {
         public SkinVM(Skin model) 
             : base(model)

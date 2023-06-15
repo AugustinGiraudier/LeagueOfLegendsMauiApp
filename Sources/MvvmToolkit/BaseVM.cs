@@ -3,26 +3,13 @@ using System.Runtime.CompilerServices;
 
 namespace MvvmToolkit
 {
-    public abstract class BaseVM<ModelT> : BaseVmNoModel
+    public class BaseVM : INotifyPropertyChanged
     {
-        public BaseVM(ModelT model)
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            Model = model;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public ModelT Model
-        {
-            get => model;
-            set
-            {
-                if (model != null && model.Equals(value)) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
-        private ModelT model;
-
-
-        
     }
 }

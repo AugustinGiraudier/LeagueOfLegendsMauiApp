@@ -7,7 +7,7 @@ using VM.Utils;
 
 namespace VM
 {
-    public partial class ChampionVM : BaseVM<Champion>
+    public partial class ChampionVM : BaseVMWithModel<Champion>
     {
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
         private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
