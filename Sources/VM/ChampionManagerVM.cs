@@ -70,13 +70,13 @@ namespace VM
         {
             if(e.PropertyName.Equals(nameof(Index)) || e.PropertyName.Equals(nameof(Count)))
             {
-                await LoadChampions(Index, Count);
+                await LoadChampions();
             }
         }
 
-        private async Task LoadChampions(int index, int count)
+        private async Task LoadChampions()
         {
-            var theChampions = await DataManager.ChampionsMgr.GetItems(index-1, count, "Name");
+            var theChampions = await DataManager.ChampionsMgr.GetItems(Index-1, Count, "Name");
             champions.Clear();
             foreach (var champion in theChampions)
             {
@@ -115,6 +115,7 @@ namespace VM
             DataManager.ChampionsMgr.AddItem( ch );
 
             updateMaxCount();
+            LoadChampions();
         }
 
         public ICommand NextPage { get; private set; }
