@@ -1,4 +1,5 @@
 ﻿using Model;
+using MvvmToolkit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using VM.Utils;
 
 namespace VM
 {
-    public class ModifiableSkinVM
+    public class ModifiableSkinVM : BaseVM
     {
         public ChampionVM Champion { get; private set; }
 
@@ -19,7 +20,17 @@ namespace VM
         }
 
         public string Name { get; set; } = "New Skin";
-        public string Icon { get; set; } = DefaultImagesUtil.DEFAULT_CHAMPION_ICON;
+
+        private string icon = DefaultImagesUtil.DEFAULT_CHAMPION_ICON;
+        public string Icon
+        {
+            get => icon;
+            set
+            {
+                icon = value;
+                OnPropertyChanged();
+            }
+        }
 
         public void saveChanges()
         {

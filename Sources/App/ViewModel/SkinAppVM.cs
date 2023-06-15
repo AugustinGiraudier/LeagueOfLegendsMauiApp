@@ -13,12 +13,16 @@ namespace App.ViewModel
     {
 
         public ModifiableSkinVM vm { get; private init; }
-        
-        public SkinAppVM(ChampionVM ch)
+
+        private INavigation navigation;
+
+        public SkinAppVM(ChampionVM ch, INavigation nav)
         {
             this.vm = new ModifiableSkinVM(ch);
+            this.navigation = nav;
 
             TakeIconCommand = new Command(async () => await TakeIcon());
+            SaveChangesCommand = new Command(async () => await SaveChanges());
         }
 
         public async Task TakeIcon()
@@ -29,7 +33,13 @@ namespace App.ViewModel
                 vm.Icon = image;
             }
         }
+        public async Task SaveChanges()
+        {
+            vm.saveChanges();
+            await navigation.PopAsync();
+        }
 
         public ICommand TakeIconCommand { get; private init; }
+        public ICommand SaveChangesCommand { get; private init; }
     }
 }

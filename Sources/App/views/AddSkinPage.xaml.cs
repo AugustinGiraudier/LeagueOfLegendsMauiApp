@@ -10,7 +10,7 @@ public partial class AddSkinPage : ContentPage
 
 	public AddSkinPage(ChampionVM vm)
 	{
-		this.Vm = new SkinAppVM(vm);
+		this.Vm = new SkinAppVM(vm, Navigation);
 		InitializeComponent();
 		BindingContext = Vm;
 	}
