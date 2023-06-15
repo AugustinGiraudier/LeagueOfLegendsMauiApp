@@ -23,6 +23,10 @@ namespace App.ViewModel
             TakePictureCommand = new Command(() => TakePhoto());
             TakeIconCommand = new Command(() => TakeIcon());
         }
+        public ModifiableChampionAppVM(ChampionManagerVM manager, INavigation navigation)
+            :this(new ModifiableChampionVM(manager), navigation)
+        {
+        }
 
         private async Task saveChanges()
         {

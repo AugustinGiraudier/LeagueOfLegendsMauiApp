@@ -26,6 +26,8 @@ namespace App.ViewModel
                 canExecute: (ChampionVM cvm) => Navigation != null
             );
 
+            AddChampion = new Command(async () => await NavigateToAddChamion());
+
         }
 
         private async Task NavigateToChamp(ChampionVM cvm)
@@ -33,8 +35,14 @@ namespace App.ViewModel
             await Navigation.PushAsync(new ChampionPage(cvm));
         }
 
+        private async Task NavigateToAddChamion()
+        {
+            await Navigation.PushAsync(new UpdateChampion(vm));
+        }
+
         // Commands :
         public ICommand NavigateToChampionCommand { get; private set; }
         public ICommand ModifyChampionCommand { get; private set; }
+        public ICommand AddChampion { get; private set; }
     }
 }

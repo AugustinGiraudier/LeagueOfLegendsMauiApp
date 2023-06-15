@@ -13,4 +13,13 @@ public partial class UpdateChampion : ContentPage
         InitializeComponent();
         BindingContext = Vm;
     }
+
+    public UpdateChampion(ChampionManagerVM manager)
+    {
+        this.Vm = new ModifiableChampionAppVM(manager, Navigation);
+        InitializeComponent();
+        BindingContext = Vm;
+    }
+
+
 }

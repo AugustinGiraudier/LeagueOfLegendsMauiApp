@@ -3,6 +3,7 @@ using MvvmToolkit;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using VM.Mappers;
 
 namespace VM
 {
@@ -56,8 +57,8 @@ namespace VM
             set {
                 if (index == value) return;
                 index = value;
-                (NextPage as Command).ChangeCanExecute();
-                (PreviousPage as Command).ChangeCanExecute();
+                (NextPage as Command)?.ChangeCanExecute();
+                (PreviousPage as Command)?.ChangeCanExecute();
                 OnPropertyChanged();
             }
         }
@@ -89,16 +90,31 @@ namespace VM
                 maxCount = value;
                 if (NextPage != null)       (NextPage as Command).ChangeCanExecute();
                 if (PreviousPage != null)   (PreviousPage as Command).ChangeCanExecute();
-                if(Index > MaxCount)
+                if(Index > MaxCount || (Index <= 0 && MaxCount != 0))
                     Index = MaxCount;
                 OnPropertyChanged();
             } 
         }
-        private int maxCount;
+        private int maxCount = 0;
 
         private void updateMaxCount()
         {
             MaxCount = (int)Math.Ceiling((double)DataManager.ChampionsMgr.GetNbItems().Result / Count);
+        }
+
+        public void addChampion(ModifiableChampionVM mcvm)
+        {
+            var ch = new Champion(
+                mcvm.Name,
+                ChampionClassMapper.getModel(mcvm.Copy.Class),
+                mcvm.Copy.Icon,
+                mcvm.Copy.Base64Image,
+                mcvm.Copy.Bio
+            );
+
+            DataManager.ChampionsMgr.AddItem( ch );
+
+            updateMaxCount();
         }
 
         public ICommand NextPage { get; private set; }

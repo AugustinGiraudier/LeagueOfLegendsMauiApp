@@ -2,16 +2,20 @@
 using MvvmToolkit;
 using System.Collections.ObjectModel;
 using VM.Mappers;
+using VM.Utils;
 
 namespace VM
 {
-    public class ChampionVM : BaseVM<Champion>
+    public partial class ChampionVM : BaseVM<Champion>
     {
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
         private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
 
         public ChampionVM()
-            : this(new Champion("New Champion", ChampionClass.Unknown, "", "", ""))
+            : this(new Champion("New Champion", ChampionClass.Unknown,
+                DefaultImagesUtil.DEFAULT_CHAMPION_ICON,
+                DefaultImagesUtil.DEFAULT_CHAMPION_IMAGE,
+                "No information..."))
         {}
 
         public ChampionVM(Champion model)

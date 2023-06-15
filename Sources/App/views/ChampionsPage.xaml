@@ -16,6 +16,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddChampion}"/>
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout>
             <Label 
