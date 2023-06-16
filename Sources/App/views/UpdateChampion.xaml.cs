@@ -5,7 +5,16 @@ namespace App.views;
 
 public partial class UpdateChampion : ContentPage
 {
+
+    // =============================================== //
+    //          Member data
+    // =============================================== //
+
     public ModifiableChampionAppVM Vm { get; private set; }
+
+    // =============================================== //
+    //          Constructors
+    // =============================================== //
 
     public UpdateChampion(ChampionVM champ)
     {
@@ -20,6 +29,9 @@ public partial class UpdateChampion : ContentPage
         InitializeComponent();
         BindingContext = Vm;
     }
+
+
+
 
 
 }

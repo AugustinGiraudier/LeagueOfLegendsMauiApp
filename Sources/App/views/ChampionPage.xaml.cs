@@ -7,10 +7,17 @@ namespace App.views;
 
 public partial class ChampionPage : ContentPage
 {
+    // =============================================== //
+    //          Member data
+    // =============================================== //
 
-	public ChampionAppVM Vm { get; private set; }
+    public ChampionAppVM Vm { get; private set; }
 
-	public ChampionPage(ChampionVM champ)
+    // =============================================== //
+    //          Constructors
+    // =============================================== //
+
+    public ChampionPage(ChampionVM champ)
 	{
 		this.Vm = new ChampionAppVM(champ, Navigation);
 		InitializeComponent();

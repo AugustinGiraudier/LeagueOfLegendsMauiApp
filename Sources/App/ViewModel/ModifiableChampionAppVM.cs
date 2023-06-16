@@ -7,9 +7,27 @@ namespace App.ViewModel
 {
     public class ModifiableChampionAppVM
     {
+        // =============================================== //
+        //          Member data
+        // =============================================== //
+
         private INavigation navigation;
+
         public ModifiableChampionVM vm { get; private set; }
 
+        // =============================================== //
+        //          Commands
+        // =============================================== //
+
+        public ICommand SaveChangesCommand { get; private set; }
+
+        public ICommand TakePictureCommand { get; private set; }
+
+        public ICommand TakeIconCommand { get; private set; }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
 
         public ModifiableChampionAppVM(ModifiableChampionVM vm, INavigation navigation)
         {
@@ -24,20 +42,21 @@ namespace App.ViewModel
             TakePictureCommand = new Command(() => TakePhoto());
             TakeIconCommand = new Command(() => TakeIcon());
         }
+
         public ModifiableChampionAppVM(INavigation navigation)
-            :this(new ModifiableChampionVM(), navigation)
+            : this(new ModifiableChampionVM(), navigation)
         {
         }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         private async Task saveChanges()
         {
             vm.saveChanges();
             await navigation.PopAsync();
         }
-
-        public ICommand SaveChangesCommand { get; private set; }
-        public ICommand TakePictureCommand { get; private set; }
-        public ICommand TakeIconCommand { get; private set; }
 
         public async void TakePhoto()
         {
@@ -57,6 +76,5 @@ namespace App.ViewModel
             }
         }
 
-        
     }
 }

@@ -5,10 +5,17 @@ namespace App.views;
 
 public partial class AddSkinPage : ContentPage
 {
+    // =============================================== //
+    //          Member data
+    // =============================================== //
 
-	public SkinAppVM Vm { get; set; }
+    public SkinAppVM Vm { get; set; }
 
-	public AddSkinPage(ChampionVM vm)
+    // =============================================== //
+    //          Constructors
+    // =============================================== //
+
+    public AddSkinPage(ChampionVM vm)
 	{
 		this.Vm = new SkinAppVM(vm, Navigation);
 		InitializeComponent();

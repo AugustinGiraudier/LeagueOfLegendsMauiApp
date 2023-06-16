@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Model;
 
 namespace VM.Mappers
 {
     public class ChampionClassMapper
     {
+
+        // =============================================== //
+        //          Member data
+        // =============================================== //
 
         private static HashSet<Tuple<ChampionClass, ChampionClassVM>> mapper = new HashSet<Tuple<ChampionClass, ChampionClassVM>>
         {
@@ -22,6 +21,9 @@ namespace VM.Mappers
             new Tuple<ChampionClass, ChampionClassVM>(ChampionClass.Tank,ChampionClassVM.Tank),
         };
 
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public static ChampionClass getModel(ChampionClassVM vm)
         {

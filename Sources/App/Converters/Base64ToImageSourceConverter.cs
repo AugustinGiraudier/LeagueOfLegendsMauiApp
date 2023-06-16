@@ -5,6 +5,11 @@ namespace App.Converters
 {
     internal class Base64ToImageSourceConverter : ByteArrayToImageSourceConverter, IValueConverter
     {
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try

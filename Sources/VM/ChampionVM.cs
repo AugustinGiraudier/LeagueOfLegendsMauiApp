@@ -1,7 +1,6 @@
 ﻿using Model;
 using MvvmToolkit;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using VM.Mappers;
 using VM.Utils;
 
@@ -9,38 +8,25 @@ namespace VM
 {
     public partial class ChampionVM : BaseVMWithModel<Champion>
     {
-        public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
-        private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
 
-        public ReadOnlyObservableDictionary<string, int> Characteristics { get; private set; }
-        private ObservableDictionary<string, int> characteristics = new ObservableDictionary<string, int>();
-        
-        public ChampionVM()
-            : this(new Champion("New Champion", ChampionClass.Unknown,
-                DefaultImagesUtil.DEFAULT_CHAMPION_ICON,
-                DefaultImagesUtil.DEFAULT_CHAMPION_IMAGE,
-                "No information..."))
-        {}
-
-        public ChampionVM(Champion model)
-            : base(model)
-        {
-            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
-            Characteristics = new ReadOnlyObservableDictionary<string, int>(characteristics);
-
-            foreach (var skin in Model.Skins) {
-                this.skins.Add(new SkinVM(skin));
-            }
-            foreach (var chara in Model.Characteristics)
-            {
-                this.characteristics.Add(chara.Key, chara.Value);
-            }
-        }
+        // =============================================== //
+        //          Member data
+        // =============================================== //
 
         public string Name
         {
             get => Model?.Name;
         }
+
+        // =============================================== //
+        //          Observable Properties
+        // =============================================== //
+
+        public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
+        private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
+
+        public ReadOnlyObservableDictionary<string, int> Characteristics { get; private set; }
+        private ObservableDictionary<string, int> characteristics = new ObservableDictionary<string, int>();
 
         public string Icon
         {
@@ -49,17 +35,6 @@ namespace VM
             {
                 if (Model == (null) || Model.Icon.Equals(value)) return;
                 Model.Icon = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Bio
-        {
-            get => Model?.Bio;
-            set
-            {
-                if(Model == null || Model.Bio.Equals(value)) return;
-                Model.Bio = value;
                 OnPropertyChanged();
             }
         }
@@ -75,6 +50,17 @@ namespace VM
             }
         }
 
+        public string Bio
+        {
+            get => Model?.Bio;
+            set
+            {
+                if (Model == null || Model.Bio.Equals(value)) return;
+                Model.Bio = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ChampionClassVM Class
         {
             get => ChampionClassMapper.getVM(Model.Class);
@@ -86,6 +72,37 @@ namespace VM
                 OnPropertyChanged();
             }
         }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
+
+        public ChampionVM()
+            : this(new Champion("New Champion", ChampionClass.Unknown,
+                        DefaultImagesUtil.DEFAULT_CHAMPION_ICON,
+                        DefaultImagesUtil.DEFAULT_CHAMPION_IMAGE,
+                        "No information..."))
+        { }
+
+        public ChampionVM(Champion model)
+            : base(model)
+        {
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            Characteristics = new ReadOnlyObservableDictionary<string, int>(characteristics);
+
+            foreach (var skin in Model.Skins)
+            {
+                this.skins.Add(new SkinVM(skin));
+            }
+            foreach (var chara in Model.Characteristics)
+            {
+                this.characteristics.Add(chara.Key, chara.Value);
+            }
+        }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public ChampionVM Clone()
         {

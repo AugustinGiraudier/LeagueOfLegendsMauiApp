@@ -1,25 +1,23 @@
 ﻿using Model;
 using MvvmToolkit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using VM.Utils;
 
 namespace VM
 {
     public class ModifiableSkinVM : BaseVM
     {
+
+        // =============================================== //
+        //          Member data
+        // =============================================== //
+
         public ChampionVM Champion { get; private set; }
 
-        public ModifiableSkinVM(ChampionVM ch)
-        {
-            Champion = ch;
-        }
-
         public string Name { get; set; } = "New Skin";
+
+        // =============================================== //
+        //          Observable Properties
+        // =============================================== //
 
         private string icon = DefaultImagesUtil.DEFAULT_CHAMPION_ICON;
         public string Icon
@@ -31,6 +29,19 @@ namespace VM
                 OnPropertyChanged();
             }
         }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
+
+        public ModifiableSkinVM(ChampionVM ch)
+        {
+            Champion = ch;
+        }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public void saveChanges()
         {

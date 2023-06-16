@@ -9,13 +9,65 @@ namespace VM
 {
     public class ChampionManagerVM : BaseVM
     {
+        // =============================================== //
+        //          Member data
+        // =============================================== //
 
         public INavigation Navigation { get; set; }
 
-        public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
-        private ObservableCollection<ChampionVM> champions =  new ObservableCollection<ChampionVM>();
-
         private IDataManager DataManager { get; set; }
+
+        private int Count { get; set; } = 5;
+
+        // =============================================== //
+        //          Observable Properties
+        // =============================================== //
+
+        public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
+        private ObservableCollection<ChampionVM> champions = new ObservableCollection<ChampionVM>();
+
+        private int index = -1;
+        public int Index
+        {
+            get => index;
+            set
+            {
+                if (index == value) return;
+                index = value;
+                (NextPageCommand as Command)?.ChangeCanExecute();
+                (PreviousPageCommand as Command)?.ChangeCanExecute();
+                OnPropertyChanged();
+            }
+        }
+
+        private int maxCount = 0;
+        public int MaxCount
+        {
+            get => maxCount;
+            private set
+            {
+                maxCount = value;
+                if (NextPageCommand != null) (NextPageCommand as Command).ChangeCanExecute();
+                if (PreviousPageCommand != null) (PreviousPageCommand as Command).ChangeCanExecute();
+                if (Index > MaxCount || (Index <= 0 && MaxCount != 0))
+                    Index = MaxCount;
+                OnPropertyChanged();
+            }
+        }
+
+        // =============================================== //
+        //          Commands
+        // =============================================== //
+
+        public ICommand NextPageCommand { get; private set; }
+
+        public ICommand PreviousPageCommand { get; private set; }
+
+        public ICommand RemoveChampionCommand { get; private set; }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
 
         public ChampionManagerVM(IDataManager dataManager)
         {
@@ -26,23 +78,23 @@ namespace VM
 
             ////// Commands :
 
-            NextPage = new Command(
-                execute:() => {
+            NextPageCommand = new Command(
+                execute: () => {
                     Index++;
-                }, 
+                },
                 canExecute: () => {
                     return Index < MaxCount;
                 });
 
-            PreviousPage = new Command(
+            PreviousPageCommand = new Command(
                 execute: () => {
                     Index--;
                 },
                 canExecute: () => {
                     return Index > 1;
                 });
-            
-            RemoveChampion = new Command<ChampionVM>(
+
+            RemoveChampionCommand = new Command<ChampionVM>(
                 execute: (ChampionVM chp) => {
                     DataManager.ChampionsMgr.DeleteItem(chp.Model);
                     updateMaxCount();
@@ -52,19 +104,9 @@ namespace VM
             Index = 1;
         }
 
-        public int Index {
-            get => index;
-            set {
-                if (index == value) return;
-                index = value;
-                (NextPage as Command)?.ChangeCanExecute();
-                (PreviousPage as Command)?.ChangeCanExecute();
-                OnPropertyChanged();
-            }
-        }
-        private int index = -1;
-
-        private int Count { get; set; } = 5;
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         private async void ToDoOnChange(object sender, PropertyChangedEventArgs e)
         {
@@ -84,18 +126,7 @@ namespace VM
             }
         }
 
-        public int MaxCount { 
-            get => maxCount; 
-            private set { 
-                maxCount = value;
-                if (NextPage != null)       (NextPage as Command).ChangeCanExecute();
-                if (PreviousPage != null)   (PreviousPage as Command).ChangeCanExecute();
-                if(Index > MaxCount || (Index <= 0 && MaxCount != 0))
-                    Index = MaxCount;
-                OnPropertyChanged();
-            } 
-        }
-        private int maxCount = 0;
+
 
         private void updateMaxCount()
         {
@@ -133,10 +164,5 @@ namespace VM
             await DataManager.SkinsMgr.AddItem( sk );
             await LoadChampions();
         }
-
-        public ICommand NextPage { get; private set; }
-        public ICommand PreviousPage { get; private set; }
-
-        public ICommand RemoveChampion { get; private set; }
     }
 }

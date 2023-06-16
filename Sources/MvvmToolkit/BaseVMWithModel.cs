@@ -5,10 +5,10 @@ namespace MvvmToolkit
 {
     public abstract class BaseVMWithModel<ModelT> : BaseVM
     {
-        public BaseVMWithModel(ModelT model)
-        {
-            Model = model;
-        }
+
+        // =============================================== //
+        //          Observable Properties
+        // =============================================== //
 
         public ModelT Model
         {
@@ -22,7 +22,14 @@ namespace MvvmToolkit
         }
         private ModelT model;
 
+        // =============================================== //
+        //          Constructor
+        // =============================================== //
 
-        
+        public BaseVMWithModel(ModelT model)
+        {
+            Model = model;
+        }
+
     }
 }

@@ -8,9 +8,10 @@ namespace VM
 {
     public class SkinVM : BaseVMWithModel<Skin>
     {
-        public SkinVM(Skin model) 
-            : base(model)
-        {}
+
+        // =============================================== //
+        //          Member data
+        // =============================================== //
 
         public string Name
         {
@@ -22,6 +23,10 @@ namespace VM
             get => Model?.Description;
         }
 
+        // =============================================== //
+        //          Observable Properties
+        // =============================================== //
+
         public string Icon
         {
             get => Model?.Icon;
@@ -32,6 +37,18 @@ namespace VM
                 OnPropertyChanged();
             }
         }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
+
+        public SkinVM(Skin model)
+            : base(model)
+        { }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public SkinVM Clone()
         {

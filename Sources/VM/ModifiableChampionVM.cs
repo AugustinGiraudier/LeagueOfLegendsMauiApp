@@ -11,15 +11,32 @@ namespace VM
 {
     public class ModifiableChampionVM : BaseVM
     {
+
+        // =============================================== //
+        //          Member data
+        // =============================================== //
+
         private ChampionVM vm;
+
         public ChampionVM Copy { get; private set; }
 
         public string CharacteristicToAdd { get; set; } = "";
+
         public int CharacteristicValueToAdd { get; set; } = 0;
 
         public string Name { get; set; }
 
         public bool isNewChampion { get; private init; } = false;
+
+        // =============================================== //
+        //          Commands
+        // =============================================== //
+
+        public ICommand AddCurrentCharacteristicCommand { get; private set; }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
 
         public ModifiableChampionVM(ChampionVM championVM)
         {
@@ -27,13 +44,18 @@ namespace VM
             Copy = championVM.Clone();
             Name = championVM.Name;
 
-            AddCurrentCharacteristic = new Command(() => DoAddCurrentCharacteristic());
+            AddCurrentCharacteristicCommand = new Command(() => DoAddCurrentCharacteristic());
         }
+
         public ModifiableChampionVM()
-            :this(new ChampionVM())
+            : this(new ChampionVM())
         {
             isNewChampion = true;
         }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public void saveChanges()
         {
@@ -53,6 +75,6 @@ namespace VM
                 Copy.AddCharacteristic(CharacteristicToAdd, CharacteristicValueToAdd);
         }
 
-        public ICommand AddCurrentCharacteristic { get; private set; }
+        
     }
 }

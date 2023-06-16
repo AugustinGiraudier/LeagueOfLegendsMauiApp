@@ -9,6 +9,11 @@ namespace App.Converters
 {
     class IntToStringConverter : IValueConverter
     {
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var val = (int)value;

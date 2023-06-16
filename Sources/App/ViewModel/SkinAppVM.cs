@@ -12,9 +12,25 @@ namespace App.ViewModel
     public class SkinAppVM
     {
 
+        // =============================================== //
+        //          Member data
+        // =============================================== //
+
         public ModifiableSkinVM vm { get; private init; }
 
         private INavigation navigation;
+
+        // =============================================== //
+        //          Commands
+        // =============================================== //
+
+        public ICommand TakeIconCommand { get; private init; }
+
+        public ICommand SaveChangesCommand { get; private init; }
+
+        // =============================================== //
+        //          Constructors
+        // =============================================== //
 
         public SkinAppVM(ChampionVM ch, INavigation nav)
         {
@@ -24,6 +40,10 @@ namespace App.ViewModel
             TakeIconCommand = new Command(async () => await TakeIcon());
             SaveChangesCommand = new Command(async () => await SaveChanges());
         }
+
+        // =============================================== //
+        //          Methods
+        // =============================================== //
 
         public async Task TakeIcon()
         {
@@ -39,7 +59,5 @@ namespace App.ViewModel
             await navigation.PopAsync();
         }
 
-        public ICommand TakeIconCommand { get; private init; }
-        public ICommand SaveChangesCommand { get; private init; }
     }
 }
