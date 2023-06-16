@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:App.Converters"
@@ -23,13 +23,12 @@
 
             <Editor Text="{Binding vm.Name}" IsEnabled="{Binding vm.isNewChampion}"/>
 
-            <Image Source="{Binding vm.Copy.Icon, Converter={StaticResource b64toImage}}" HeightRequest="50" HorizontalOptions="Center" Margin="0,10,0,20">
+            <Image Source="{Binding vm.Copy.Icon, Converter={StaticResource b64toImage}}" HeightRequest="50" Margin="0,10,0,20">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding TakeIconCommand}"/>
                 </Image.GestureRecognizers>
             </Image>
-
-        <Image Source="{Binding vm.Copy.Base64Image, Converter={StaticResource b64toImage}}" HeightRequest="300" >
+            <Image Source="{Binding vm.Copy.Base64Image, Converter={StaticResource b64toImage}}" HeightRequest="300" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding TakePictureCommand}"/>
                 </Image.GestureRecognizers>
