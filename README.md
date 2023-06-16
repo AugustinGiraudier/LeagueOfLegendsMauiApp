@@ -2,7 +2,7 @@
 
 ## Version 1 : MVVM Maison
 
-Cette version est disponible sur la branche ´master´.
+Cette version est disponible sur la branche ```master```.
 
 ### Travail réalisé :
 
