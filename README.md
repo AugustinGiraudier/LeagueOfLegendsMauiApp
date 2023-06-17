@@ -16,7 +16,7 @@ Mon choix pour le mettre en place a été de créer deux classes de base pour me
 ```mermaid
 
     classDiagram
-    direction BT
+    direction BT;
 
     class INotifyPropertyChanged{
         <<interface>>
@@ -46,7 +46,7 @@ Les classes ViewModel sont organisées comme tel :
 ```mermaid
 
     classDiagram
-    direction BT
+    direction BT;
 
     BaseVMWithModel --|> BaseVM
     SkinVM --|> BaseVMWithModel
@@ -72,7 +72,7 @@ Les classes ViewModel applicatives sont organisées comme tel :
 ```mermaid
 
     classDiagram
-    direction BT
+    direction BT;
 
     class INavigation{
         <<interface>>
