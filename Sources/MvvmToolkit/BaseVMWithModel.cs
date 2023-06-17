@@ -10,17 +10,7 @@ namespace MvvmToolkit
         //          Observable Properties
         // =============================================== //
 
-        public ModelT Model
-        {
-            get => model;
-            set
-            {
-                if (model != null && model.Equals(value)) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
-        private ModelT model;
+        public ModelT Model { get; set; }
 
         // =============================================== //
         //          Constructor
