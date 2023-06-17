@@ -1,10 +1,12 @@
 ﻿using App.views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using VM;
 
 namespace App.ViewModel
 {
-    public class ChampionAppVM
+    public partial class ChampionAppVM
     {
         // =============================================== //
         //          Member data
@@ -18,9 +20,19 @@ namespace App.ViewModel
         //          Commands
         // =============================================== //
 
-        public ICommand OpenUpdatePageCommand { get; private set; }
+        [RelayCommand]
+        private async Task AddSkin()
+        {
+            await Navigation.PushAsync(new AddSkinPage(vm));
+        }
 
-        public ICommand AddSkinCommand { get; private set; }
+        [RelayCommand(CanExecute =nameof(NavigationNotNull))]
+        private async Task OpenUpdatePage()
+        {
+            await Navigation.PushAsync(new UpdateChampion(vm));
+        }
+
+        //public ICommand AddSkinCommand { get; private set; }
 
         // =============================================== //
         //          Constructors
@@ -30,13 +42,6 @@ namespace App.ViewModel
         {
             this.vm = vm;
             this.Navigation = nav;
-
-            OpenUpdatePageCommand = new Command(
-                execute: async () => await Navigation.PushAsync(new UpdateChampion(vm)),
-                canExecute: () => Navigation != null
-            );
-
-            AddSkinCommand = new Command(async () => await NavigateToAddSkin());
         }
 
         // =============================================== //
@@ -48,10 +53,9 @@ namespace App.ViewModel
             await Navigation.PushAsync(new ChampionPage(vm));
         }
 
-        private async Task NavigateToAddSkin()
+        private bool NavigationNotNull()
         {
-            await Navigation.PushAsync(new AddSkinPage(vm));
+            return Navigation != null; 
         }
-
     }
 }

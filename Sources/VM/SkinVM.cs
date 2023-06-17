@@ -3,6 +3,7 @@ using Model;
 using VM.Utils;
 using System.Reflection.PortableExecutable;
 using System.Security.Claims;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace VM
 {
@@ -30,12 +31,7 @@ namespace VM
         public string Icon
         {
             get => Model?.Icon;
-            set
-            {
-                if (Model?.Icon == value) return;
-                Model.Icon = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Icon, value, Model, (m, d) => m.Description = d);
         }
 
         // =============================================== //

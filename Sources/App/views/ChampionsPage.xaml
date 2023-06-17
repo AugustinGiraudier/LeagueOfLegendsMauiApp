@@ -17,7 +17,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddChampion}"/>
+        <ToolbarItem Text="Add" Command="{Binding AddChampionCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ScrollView>
@@ -71,7 +71,7 @@
                                         </StackLayout>
                                     </StackLayout>
                                     <StackLayout.GestureRecognizers 
-                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampion}"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:ViewModel.ChampionManagerAppVM}}, Path=NavigateToChampionCommand}"
                                         CommandParameter="{Binding .}" />
                                 </StackLayout>
                             </SwipeView>

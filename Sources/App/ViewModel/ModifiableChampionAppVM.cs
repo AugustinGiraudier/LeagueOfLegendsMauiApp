@@ -1,11 +1,13 @@
 ﻿using App.Converters;
 using App.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using VM;
 
 namespace App.ViewModel
 {
-    public class ModifiableChampionAppVM
+    public partial class ModifiableChampionAppVM
     {
         // =============================================== //
         //          Member data
@@ -19,11 +21,36 @@ namespace App.ViewModel
         //          Commands
         // =============================================== //
 
-        public ICommand SaveChangesCommand { get; private set; }
+        [RelayCommand(CanExecute = nameof(SaveChangesCanExecute))]
+        private async Task SaveChanges()
+        {
+            vm.saveChanges();
+            await navigation.PopAsync();
+        }
+        private bool SaveChangesCanExecute()
+        {
+            return vm != null;
+        }
 
-        public ICommand TakePictureCommand { get; private set; }
+        [RelayCommand]
+        public async void TakePicture()
+        {
+            string image = await ImageUtils.ChooseImageB64();
+            if (image != null)
+            {
+                vm.Copy.Base64Image = image;
+            }
+        }
 
-        public ICommand TakeIconCommand { get; private set; }
+        [RelayCommand]
+        public async void TakeIcon()
+        {
+            string icon = await ImageUtils.ChooseImageB64();
+            if (icon != null)
+            {
+                vm.Copy.Icon = icon;
+            }
+        }
 
         // =============================================== //
         //          Constructors
@@ -33,48 +60,11 @@ namespace App.ViewModel
         {
             this.navigation = navigation;
             this.vm = vm;
-
-            SaveChangesCommand = new Command(
-              execute: async () => await saveChanges(),
-              canExecute: () => vm != null
-            );
-
-            TakePictureCommand = new Command(() => TakePhoto());
-            TakeIconCommand = new Command(() => TakeIcon());
         }
 
         public ModifiableChampionAppVM(INavigation navigation)
             : this(new ModifiableChampionVM(), navigation)
         {
         }
-
-        // =============================================== //
-        //          Methods
-        // =============================================== //
-
-        private async Task saveChanges()
-        {
-            vm.saveChanges();
-            await navigation.PopAsync();
-        }
-
-        public async void TakePhoto()
-        {
-            string image = await ImageUtils.ChooseImageB64();
-            if (image != null)
-            {
-                vm.Copy.Base64Image = image;
-            }
-        }
-
-        public async void TakeIcon()
-        {
-            string icon = await ImageUtils.ChooseImageB64();
-            if(icon != null)
-            {
-                vm.Copy.Icon = icon;
-            }
-        }
-
     }
 }

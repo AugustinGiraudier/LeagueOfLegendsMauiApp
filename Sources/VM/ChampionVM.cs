@@ -31,46 +31,25 @@ namespace VM
         public string Icon
         {
             get => Model?.Icon;
-            set
-            {
-                if (Model == (null) || Model.Icon.Equals(value)) return;
-                Model.Icon = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Icon, value, Model, (m, i) => m.Icon = i);
         }
 
         public string Base64Image
         {
             get => Model?.Image.Base64;
-            set
-            {
-                if (Model == null || Model.Image == null || Model.Image.Base64.Equals(value)) return;
-                Model.Image.Base64 = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Image.Base64, value, Model, (m, i) => m.Image.Base64 = i);
         }
 
         public string Bio
         {
             get => Model?.Bio;
-            set
-            {
-                if (Model == null || Model.Bio.Equals(value)) return;
-                Model.Bio = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Bio, value, Model, (m, b) => m.Bio = b);
         }
 
         public ChampionClassVM Class
         {
             get => ChampionClassMapper.getVM(Model.Class);
-            set
-            {
-                ChampionClass cl = ChampionClassMapper.getModel(value);
-                if (Model == (null) || Model.Class.Equals(cl)) return;
-                Model.Class = cl;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Class, ChampionClassMapper.getModel(value), Model, (m, c) => m.Class = c);
         }
 
         // =============================================== //

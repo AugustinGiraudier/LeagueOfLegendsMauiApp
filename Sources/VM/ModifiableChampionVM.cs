@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Platform;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Platform;
 using MvvmToolkit;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Windows.Input;
 
 namespace VM
 {
-    public class ModifiableChampionVM : BaseVM
+    public partial class ModifiableChampionVM : ObservableObject
     {
 
         // =============================================== //
@@ -32,7 +34,12 @@ namespace VM
         //          Commands
         // =============================================== //
 
-        public ICommand AddCurrentCharacteristicCommand { get; private set; }
+        [RelayCommand]
+        private void AddCurrentCharacteristic()
+        {
+            if (CharacteristicToAdd != String.Empty)
+                Copy.AddCharacteristic(CharacteristicToAdd, CharacteristicValueToAdd);
+        }
 
         // =============================================== //
         //          Constructors
@@ -43,8 +50,6 @@ namespace VM
             vm = championVM;
             Copy = championVM.Clone();
             Name = championVM.Name;
-
-            AddCurrentCharacteristicCommand = new Command(() => DoAddCurrentCharacteristic());
         }
 
         public ModifiableChampionVM()
@@ -68,13 +73,5 @@ namespace VM
                 ManagerProvider.Instance?.addChampion(this);
             }
         }
-
-        private void DoAddCurrentCharacteristic()
-        {
-            if(CharacteristicToAdd != String.Empty)
-                Copy.AddCharacteristic(CharacteristicToAdd, CharacteristicValueToAdd);
-        }
-
-        
     }
 }

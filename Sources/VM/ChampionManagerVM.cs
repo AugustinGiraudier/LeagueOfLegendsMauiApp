@@ -1,4 +1,6 @@
-﻿using Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Model;
 using MvvmToolkit;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,7 +9,7 @@ using VM.Mappers;
 
 namespace VM
 {
-    public class ChampionManagerVM : BaseVM
+    public partial class ChampionManagerVM : ObservableObject
     {
         // =============================================== //
         //          Member data
@@ -26,44 +28,47 @@ namespace VM
         public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
         private ObservableCollection<ChampionVM> champions = new ObservableCollection<ChampionVM>();
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NextPageCommand), nameof(PreviousPageCommand))]
         private int index = -1;
-        public int Index
-        {
-            get => index;
-            set
-            {
-                if (index == value) return;
-                index = value;
-                (NextPageCommand as Command)?.ChangeCanExecute();
-                (PreviousPageCommand as Command)?.ChangeCanExecute();
-                OnPropertyChanged();
-            }
-        }
 
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NextPageCommand), nameof(PreviousPageCommand))]
         private int maxCount = 0;
-        public int MaxCount
-        {
-            get => maxCount;
-            private set
-            {
-                maxCount = value;
-                if (NextPageCommand != null) (NextPageCommand as Command).ChangeCanExecute();
-                if (PreviousPageCommand != null) (PreviousPageCommand as Command).ChangeCanExecute();
-                if (Index > MaxCount || (Index <= 0 && MaxCount != 0))
-                    Index = MaxCount;
-                OnPropertyChanged();
-            }
-        }
 
         // =============================================== //
         //          Commands
         // =============================================== //
 
-        public ICommand NextPageCommand { get; private set; }
+        //public ICommand NextPageCommand { get; private set; }
 
-        public ICommand PreviousPageCommand { get; private set; }
+        [RelayCommand(CanExecute=nameof(NextPageCanExecute))]
+        private void NextPage()
+        {
+            Index++;
+        }
+        private bool NextPageCanExecute()
+        {
+            return Index < MaxCount;
+        }
 
-        public ICommand RemoveChampionCommand { get; private set; }
+        [RelayCommand(CanExecute = nameof(PreviousPageCanExecute))]
+        private void PreviousPage()
+        {
+            Index--;
+        }
+        private bool PreviousPageCanExecute()
+        {
+            return Index > 1;
+        }
+
+        [RelayCommand]
+        private void RemoveChampion(ChampionVM chp)
+        {
+            DataManager.ChampionsMgr.DeleteItem(chp.Model);
+            updateMaxCount();
+            OnPropertyChanged(nameof(Index));
+        }
 
         // =============================================== //
         //          Constructors
@@ -75,31 +80,6 @@ namespace VM
             DataManager = dataManager;
             PropertyChanged += ToDoOnChange;
             updateMaxCount();
-
-            ////// Commands :
-
-            NextPageCommand = new Command(
-                execute: () => {
-                    Index++;
-                },
-                canExecute: () => {
-                    return Index < MaxCount;
-                });
-
-            PreviousPageCommand = new Command(
-                execute: () => {
-                    Index--;
-                },
-                canExecute: () => {
-                    return Index > 1;
-                });
-
-            RemoveChampionCommand = new Command<ChampionVM>(
-                execute: (ChampionVM chp) => {
-                    DataManager.ChampionsMgr.DeleteItem(chp.Model);
-                    updateMaxCount();
-                    OnPropertyChanged(nameof(Index));
-                });
 
             Index = 1;
         }
@@ -126,11 +106,11 @@ namespace VM
             }
         }
 
-
-
         private void updateMaxCount()
         {
             MaxCount = (int)Math.Ceiling((double)DataManager.ChampionsMgr.GetNbItems().Result / Count);
+            if (Index > MaxCount || (Index <= 0 && MaxCount != 0))
+                Index = MaxCount;
         }
 
         public async void addChampion(ModifiableChampionVM mcvm)

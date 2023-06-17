@@ -1,4 +1,6 @@
 ﻿using App.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using VM;
 
 namespace App.ViewModel
 {
-    public class SkinAppVM
+    public partial class SkinAppVM
     {
 
         // =============================================== //
@@ -24,9 +26,22 @@ namespace App.ViewModel
         //          Commands
         // =============================================== //
 
-        public ICommand TakeIconCommand { get; private init; }
+        [RelayCommand]
+        public async Task TakeIcon()
+        {
+            string image = await ImageUtils.ChooseImageB64();
+            if (image != null)
+            {
+                vm.Icon = image;
+            }
+        }
 
-        public ICommand SaveChangesCommand { get; private init; }
+        [RelayCommand]
+        public async Task SaveChanges()
+        {
+            vm.saveChanges();
+            await navigation.PopAsync();
+        }
 
         // =============================================== //
         //          Constructors
@@ -36,27 +51,6 @@ namespace App.ViewModel
         {
             this.vm = new ModifiableSkinVM(ch);
             this.navigation = nav;
-
-            TakeIconCommand = new Command(async () => await TakeIcon());
-            SaveChangesCommand = new Command(async () => await SaveChanges());
-        }
-
-        // =============================================== //
-        //          Methods
-        // =============================================== //
-
-        public async Task TakeIcon()
-        {
-            string image = await ImageUtils.ChooseImageB64();
-            if (image != null)
-            {
-                vm.Icon = image;
-            }
-        }
-        public async Task SaveChanges()
-        {
-            vm.saveChanges();
-            await navigation.PopAsync();
         }
 
     }

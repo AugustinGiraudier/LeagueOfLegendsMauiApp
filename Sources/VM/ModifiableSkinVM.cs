@@ -1,10 +1,11 @@
-﻿using Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Model;
 using MvvmToolkit;
 using VM.Utils;
 
 namespace VM
 {
-    public class ModifiableSkinVM : BaseVM
+    public partial class ModifiableSkinVM : ObservableObject
     {
 
         // =============================================== //
@@ -19,16 +20,8 @@ namespace VM
         //          Observable Properties
         // =============================================== //
 
+        [ObservableProperty]
         private string icon = DefaultImagesUtil.DEFAULT_CHAMPION_ICON;
-        public string Icon
-        {
-            get => icon;
-            set
-            {
-                icon = value;
-                OnPropertyChanged();
-            }
-        }
 
         // =============================================== //
         //          Constructors

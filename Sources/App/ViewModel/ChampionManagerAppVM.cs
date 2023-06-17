@@ -1,10 +1,12 @@
 ﻿using System.Windows.Input;
 using VM;
 using App.views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace App.ViewModel
 {
-    public class ChampionManagerAppVM
+    public partial class ChampionManagerAppVM
     {
         // =============================================== //
         //          Member data
@@ -18,11 +20,23 @@ namespace App.ViewModel
         //          Commands
         // =============================================== //
 
-        public ICommand NavigateToChampionCommand { get; private set; }
+        [RelayCommand(CanExecute = nameof(NavigationNotNull))]
+        private async Task NavigateToChampion(ChampionVM cvm)
+        {
+            await Navigation.PushAsync(new ChampionPage(cvm));
+        }
 
-        public ICommand ModifyChampionCommand { get; private set; }
+        [RelayCommand(CanExecute =nameof(NavigationNotNull))]
+        private async Task ModifyChampion(ChampionVM cvm)
+        {
+            await Navigation.PushAsync(new UpdateChampion(cvm));
+        }
 
-        public ICommand AddChampion { get; private set; }
+        [RelayCommand]
+        private async Task AddChampion()
+        {
+            await Navigation.PushAsync(new UpdateChampion());
+        }
 
         // =============================================== //
         //          Constructors
@@ -32,39 +46,15 @@ namespace App.ViewModel
         {
             this.Navigation = nav;
             vm = ManagerProvider.Instance;
-
-            // commands : 
-
-            NavigateToChampionCommand = new Command<ChampionVM>(
-                execute: async (ChampionVM cvm) => await NavigateToChamp(cvm),
-                canExecute: (ChampionVM cvm) => Navigation is not null);
-
-            ModifyChampionCommand = new Command<ChampionVM>(
-                execute: async (ChampionVM cvm) => await UpdateChampion(cvm),
-                canExecute: (ChampionVM cvm) => Navigation != null
-            );
-
-            AddChampion = new Command(async () => await NavigateToAddChamion());
-
         }
 
         // =============================================== //
         //          Methods
         // =============================================== //
 
-        private async Task NavigateToChamp(ChampionVM cvm)
+        private bool NavigationNotNull()
         {
-            await Navigation.PushAsync(new ChampionPage(cvm));
-        }
-
-        private async Task NavigateToAddChamion()
-        {
-            await Navigation.PushAsync(new UpdateChampion());
-        }
-
-        private async Task UpdateChampion(ChampionVM cvm)
-        {
-            await Navigation.PushAsync(new UpdateChampion(cvm));
+            return Navigation != null;
         }
     }
 }
