@@ -7,7 +7,7 @@ namespace MvvmToolkit
     {
 
         // =============================================== //
-        //          Observable Properties
+        //          Member Data
         // =============================================== //
 
         public ModelT Model { get; set; }
