@@ -14,7 +14,6 @@ Dans ce projet, nous mettrons en place des classes ViewModel réutilisables pour
 Mon choix pour le mettre en place a été de créer deux classes de base pour mes classes View Model dans un package ```MvvmToolkit```.
 
 ```mermaid
-
     classDiagram
     direction BT
 
@@ -44,7 +43,6 @@ Ainsi, l'on peut dériver de `BaseVM` pour bénéficier du systeme de notificati
 Les classes ViewModel sont organisées comme tel :
 
 ```mermaid
-
     classDiagram
     direction BT
 
@@ -70,7 +68,6 @@ Les classes ViewModel sont organisées comme tel :
 Les classes ViewModel applicatives sont organisées comme tel :
 
 ```mermaid
-
     classDiagram
     direction BT
 
