@@ -14,8 +14,9 @@ Dans ce projet, nous mettrons en place des classes ViewModel réutilisables pour
 Mon choix pour le mettre en place a été de créer deux classes de base pour mes classes View Model dans un package ```MvvmToolkit```.
 
 ```mermaid
+
     classDiagram
-    direction BT;
+    direction BT
 
     class INotifyPropertyChanged{
         <<interface>>
@@ -43,8 +44,9 @@ Ainsi, l'on peut dériver de `BaseVM` pour bénéficier du systeme de notificati
 Les classes ViewModel sont organisées comme tel :
 
 ```mermaid
+
     classDiagram
-    direction BT;
+    direction BT
 
     BaseVMWithModel --|> BaseVM
     SkinVM --|> BaseVMWithModel
@@ -68,8 +70,9 @@ Les classes ViewModel sont organisées comme tel :
 Les classes ViewModel applicatives sont organisées comme tel :
 
 ```mermaid
+
     classDiagram
-    direction BT;
+    direction BT
 
     class INavigation{
         <<interface>>
@@ -86,6 +89,20 @@ Les classes ViewModel applicatives sont organisées comme tel :
 
 ```
 
+## Version 2 : Améliorations avec MVVM Toolkit
+
+Cette version est diponible sur la branche ```MVVM_Toolkit```.  
+Voici ce qu'elle a permis d'améliorer :
+
+* Disparition de `BaseVM`
+* `BaseVMWithModel` hérite maintenant de `ObservableObject`
+* Les VM qui héritaient de `BaseVM` héritent de `ObservableObject`
+* Les propriétés qui wrap des propriétés du model utilisent dans leur setter `SetProperty(...)`
+* Les propriétés modifiables non indexées sur un model ont été décorées avec [ObservableProperty]
+* Toutes les commandes des VM et AppVM ont été retirées et les méthodes appelées par ces commandes ont été décorées avec [RelayCommand]
+* Les commandes ayant des conditions d'execution ont été remplacées par leur méthode décorée de `[RelayCommand(CanExecute=nameof(TestFunction))]`
+* Les propriétés suceptibles d'affecter ces dernières conditions ont été décorées avec `[NotifyCanExecuteChangedFor(nameof(TheCommand))]`
+
 ## Travail réalisé :
 
 * Ce qui fonctionne :
@@ -101,7 +118,4 @@ Les classes ViewModel applicatives sont organisées comme tel :
 * Ce qui n'a pas été implémenté :
     * Suppression de charactéristique
     * Suppression / Modification de skins
-    * Gestion des compétences
-
-
-
+    * Gestion des compétences (skills)
